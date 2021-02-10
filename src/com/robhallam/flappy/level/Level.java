@@ -23,6 +23,8 @@ public class Level {
 	
 	private Random random = new Random();
 	
+	private float OFFSET = 5.0f;
+	
 	public Level() {
 		float[] vertices = new float[] {
 				-10.0f, -10.0f * 9.0f / 16.0f, 0.0f,
@@ -54,7 +56,7 @@ public class Level {
 	private void createPipes() { // Instantiates Pipe objects
 		Pipe.create();
 		for (int i = 0; i < 5 * 2; i+= 2) {
-			pipes[i] = new Pipe(index * 3.0f, random.nextFloat() * 4.0f);
+			pipes[i] = new Pipe(OFFSET + index * 3.0f, random.nextFloat() * 4.0f);
 			pipes[i+1] = new Pipe(pipes[i].getX(), pipes[i].getY() - 12.0f); // getX so aligned horizontally
 			index += 2;
 		}
