@@ -1,6 +1,6 @@
 package com.robhallam.flappy.level;
 
-import org.lwjgl.glfw.GLFW;
+import static org.lwjgl.glfw.GLFW.*;
 
 import com.robhallam.flappy.graphics.Shader;
 import com.robhallam.flappy.graphics.Texture;
@@ -44,19 +44,17 @@ public class Bird {
 	}
 	
 	public void update() {
-		if (Input.keys[GLFW.GLFW_KEY_UP]) {
-			position.y += 0.1f; 
+		position.y -= delta;
+		if (Input.isKeyDown(GLFW_KEY_SPACE)) {
+			delta = -0.15f;
 		}
-		if (Input.keys[GLFW.GLFW_KEY_DOWN]) {
-			position.y -= 0.1f; 
+		else {
+			delta += 0.01f;
 		}
-		if (Input.keys[GLFW.GLFW_KEY_LEFT]) {
-			position.x -= 0.1f; 
-		}
-		if (Input.keys[GLFW.GLFW_KEY_RIGHT]) {
-			position.x += 0.1f; 
-		}
-		
+	}
+	
+	private void fall() {
+		delta = -0.15f;
 	}
 	
 	public void render() {

@@ -12,5 +12,9 @@ public class Input extends GLFWKeyCallback {
 		keys[key] = action == GLFW.GLFW_RELEASE ? false : true; // REPEAT (hold down) - fired on PRESS (RELEASE only event fired when we release)
 		
 	}
+	
+	public static boolean isKeyDown(int keycode) {
+		return keys[keycode];
+	}
 
 }
