@@ -6,7 +6,7 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-import org.lwjgl.BufferUtils;
+import com.robhallam.flappy.utils.BufferUtils;
 
 import static org.lwjgl.opengl.GL11.*;
 
