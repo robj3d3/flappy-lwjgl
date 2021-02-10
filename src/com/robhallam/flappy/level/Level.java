@@ -1,11 +1,13 @@
 package com.robhallam.flappy.level;
 
 import com.robhallam.flappy.graphics.Shader;
+import com.robhallam.flappy.graphics.Texture;
 import com.robhallam.flappy.graphics.VertexArray;
 
 public class Level {
 	
 	private VertexArray background;
+	private Texture bgTexture;
 	
 	public Level() {
 		float[] vertices = new float[] {
@@ -28,11 +30,14 @@ public class Level {
 		};
 		
 		background = new VertexArray(vertices, indices, tcs);
+		bgTexture = new Texture("res/bg.jpeg");
 	}
 	
 	public void render() {
+		bgTexture.bind();
 		Shader.BG.enable();
 		background.render();
 		Shader.BG.disable();
+		bgTexture.unbind();
 	}
 }
