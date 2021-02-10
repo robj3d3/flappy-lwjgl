@@ -51,6 +51,8 @@ public class Bird {
 		else {
 			delta += 0.01f;
 		}
+		
+		rot = -delta * 90.0f;
 	}
 	
 	private void fall() {
@@ -59,7 +61,7 @@ public class Bird {
 	
 	public void render() {
 		Shader.BIRD.enable();
-		Shader.BIRD.setUniformMat4f("ml_matrix", Matrix4f.translate(position));
+		Shader.BIRD.setUniformMat4f("ml_matrix", Matrix4f.translate(position).multiply(Matrix4f.rotate(rot)));
 		texture.bind();
 		mesh.render();
 		Shader.BIRD.disable();
