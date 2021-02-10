@@ -15,7 +15,7 @@ public class Matrix4f {
 	
 	public static Matrix4f identity() {
 		Matrix4f result = new Matrix4f();
-		for (int i = 0;, i < SIZE; i++) {
+		for (int i = 0; i < SIZE; i++) {
 			result.elements[i] = 0.0f; // will be 0 by default, just done to make it clear
 		}
 		result.elements[0 + 0 * 4] = 1.0f;
