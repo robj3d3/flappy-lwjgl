@@ -113,6 +113,9 @@ public class Main implements Runnable {
 			}
 		}
 		
+		glfwDestroyWindow(window);
+		glfwTerminate();
+		
 	}
 	
 	private void update() {
