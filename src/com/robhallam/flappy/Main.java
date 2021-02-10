@@ -72,6 +72,9 @@ public class Main implements Runnable {
 		Shader.BIRD.setUniformMat4f("pr_matrix", pr_matrix);
 		Shader.BIRD.setUniform1i("tex", 1);
 		
+		Shader.PIPE.setUniformMat4f("pr_matrix", pr_matrix);
+		Shader.PIPE.setUniform1i("tex", 1);
+		
 		level = new Level();
 	}
 	

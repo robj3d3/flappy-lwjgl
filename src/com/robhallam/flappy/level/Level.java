@@ -1,5 +1,7 @@
 package com.robhallam.flappy.level;
 
+import java.util.Random;
+
 import com.robhallam.flappy.graphics.Shader;
 import com.robhallam.flappy.graphics.Texture;
 import com.robhallam.flappy.graphics.VertexArray;
@@ -15,6 +17,11 @@ public class Level {
 	private int map = 0;
 	
 	private Bird bird;
+	
+	private Pipe[] pipes = new Pipe[5 * 2]; // 5 on the top, 5 on the bottom
+	private int index = 0;
+	
+	private Random random = new Random();
 	
 	public Level() {
 		float[] vertices = new float[] {
@@ -40,6 +47,20 @@ public class Level {
 		bgTexture = new Texture("res/bg.jpeg");
 		
 		bird = new Bird();
+		
+		createPipes();
+	}
+	
+	private void createPipes() { // Instantiates Pipe objects
+		Pipe.create();
+		for (int i = 0; i < 5 * 2; i+= 2) {
+			pipes[i] = new Pipe(index * 3.0f, random.nextFloat() * 4.0f);
+			pipes[i+1] = new Pipe(pipes[i].getX(), pipes[i].getY() - 12.0f); // getX so aligned horizontally
+			index += 2;
+		}
+	}
+	private void updatePipes() {
+//		pipes[]
 	}
 	
 	public void update() {
@@ -47,6 +68,22 @@ public class Level {
 		if (-xScroll % 335 == 0) map++;
 		
 		bird.update();
+	}
+	
+	private void renderPipes() {
+		Shader.PIPE.enable();
+		Shader.PIPE.setUniformMat4f("vw_matrix", Matrix4f.translate(new Vector3f(xScroll * 0.03f, 0.0f, 0.0f)));
+		Pipe.getTexture().bind();
+		Pipe.getMesh().bind(); // Not calling render(), instead calling bind() and draw() as with BG
+		
+		for (int i = 0; i < 5 * 2; i++) {
+			Shader.PIPE.setUniformMat4f("ml_matrix", pipes[i].getModelMatrix());
+			Shader.PIPE.setUniform1i("top", i % 2 == 0 ? 1 : 0);
+			Pipe.getMesh().draw();
+		}
+		
+		Pipe.getMesh().unbind();
+		Pipe.getTexture().unbind();
 	}
 	
 	public void render() {
@@ -60,6 +97,7 @@ public class Level {
 		Shader.BG.disable();
 		bgTexture.unbind();
 		
+		renderPipes();
 		bird.render();
 	}
 }
