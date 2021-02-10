@@ -74,9 +74,33 @@ public class Main implements Runnable {
 	
 	public void run() {
 		init(); // init and render need to be on same thread
+		
+		long lastTime = System.nanoTime();
+		double delta = 0.0;
+		double ns = 1000000000.0 / 60.0;
+		long timer = System.currentTimeMillis();
+		int updates = 0; // Tracks how many times we update things per second
+		int frames = 0; // Tracks how many times render() is called
+		
 		while (running) {
-			update();
+			long now = System.nanoTime();
+			delta += (now - lastTime) / ns;
+			lastTime = now;
+			if (delta >= 1.0) { // Every time delta = 1.0, we've looped 60 times per second
+				update();
+				updates++;
+				delta--;
+			}
+			
 			render();
+			frames++;
+			
+			if (System.currentTimeMillis() - timer > 1000) {
+				timer += 1000;
+				System.out.println(updates + " ups, " + frames + " fps");
+				updates = 0;
+				frames = 0;
+			}
 			
 			if (glfwWindowShouldClose(window)) {
 				running = false;
@@ -87,6 +111,7 @@ public class Main implements Runnable {
 	
 	private void update() {
 		glfwPollEvents(); // key events
+		level.update();
 //		if (Input.keys[GLFW_KEY_SPACE]) {
 //			System.out.println("FLAP!");
 //		}

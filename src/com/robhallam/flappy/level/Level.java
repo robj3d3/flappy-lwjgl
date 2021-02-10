@@ -3,11 +3,16 @@ package com.robhallam.flappy.level;
 import com.robhallam.flappy.graphics.Shader;
 import com.robhallam.flappy.graphics.Texture;
 import com.robhallam.flappy.graphics.VertexArray;
+import com.robhallam.flappy.math.Matrix4f;
+import com.robhallam.flappy.math.Vector3f;
 
 public class Level {
 	
 	private VertexArray background;
 	private Texture bgTexture;
+	
+	private int xScroll = 0; // Horizontal scroll amount
+	private int map = 0;
 	
 	public Level() {
 		float[] vertices = new float[] {
@@ -33,9 +38,19 @@ public class Level {
 		bgTexture = new Texture("res/bg.jpeg");
 	}
 	
+	public void update() {
+		xScroll--; // -ve because moving map left
+		if (-xScroll % 300 == 0) map++;
+	}
+	
 	public void render() {
 		bgTexture.bind();
 		Shader.BG.enable();
+		background.bind(); // Only want to bind once
+		for (int i = map; i < map + 4; i++) {
+			Shader.BG.setUniformMat4f("vw_matrix", Matrix4f.translate(new Vector3f(i * 10 + xScroll * 0.03f, 0.0f, 0.0f)));
+			background.draw(); // don't want to bind-draw-bind-draw-bind... so don't use render, just bind-draw-draw-dr...
+		}
 		background.render();
 		Shader.BG.disable();
 		bgTexture.unbind();
