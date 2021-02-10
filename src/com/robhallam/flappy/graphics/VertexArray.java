@@ -41,8 +41,9 @@ public class VertexArray {
 	}
 	
 	public void bind() {
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
 		glBindVertexArray(vao);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
+		
 	}
 	
 	public void unbind() {

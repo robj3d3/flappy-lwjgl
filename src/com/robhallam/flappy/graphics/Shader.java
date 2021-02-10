@@ -15,11 +15,18 @@ public class Shader {
 	public static final int VERTEX_ATTRIB = 0;
 	public static final int TCOORD_ATTRIB = 1;
 	
+	public static Shader BG;// Don't want more than one instance of the same shader
+	
 	private final int ID;
 	private Map<String, Integer> locationCache = new HashMap<String, Integer>(); // caches location - doesn't change, no need to keep checking
 	
 	public Shader(String vertex, String fragment) {
 		ID = ShaderUtils.load(vertex, fragment);
+	}
+	
+	public static void loadAll() {
+		// Need to initialise OpenGL before running OpenGL code, hence this isn't on instantiation line
+		BG = new Shader("shaders/bg.vert", "shaders/bg.frag");
 	}
 	
 	public int getUniform(String name) {
