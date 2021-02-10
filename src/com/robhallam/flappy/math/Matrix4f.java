@@ -1,5 +1,7 @@
 package com.robhallam.flappy.math;
 
+import java.nio.FloatBuffer;
+
 import com.robhallam.flappy.utils.BufferUtils;
 
 public class Matrix4f {
@@ -85,6 +87,6 @@ public class Matrix4f {
 	}
 	
 	public FloatBuffer toFloatBuffer() {
-		return BufferUtils.createFlotBuffer(elements);
+		return BufferUtils.createFloatBuffer(elements);
 	}
 }
