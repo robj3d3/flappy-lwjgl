@@ -15,7 +15,7 @@ public class Shader {
 	public static final int VERTEX_ATTRIB = 0;
 	public static final int TCOORD_ATTRIB = 1;
 	
-	public static Shader BG;// Don't want more than one instance of the same shader
+	public static Shader BG, BIRD;// Don't want more than one instance of the same shader
 	
 	private boolean enabled = false;
 	
@@ -29,6 +29,7 @@ public class Shader {
 	public static void loadAll() {
 		// Need to initialise OpenGL before running OpenGL code, hence this isn't on instantiation line
 		BG = new Shader("shaders/bg.vert", "shaders/bg.frag");
+		BIRD = new Shader("shaders/bird.vert", "shaders/bird.frag");
 	}
 	
 	public int getUniform(String name) {

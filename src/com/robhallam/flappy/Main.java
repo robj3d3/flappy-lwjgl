@@ -69,6 +69,9 @@ public class Main implements Runnable {
 		Shader.BG.setUniform1i("tex", 1);
 //		Shader.BG.disable();
 		
+		Shader.BIRD.setUniformMat4f("pr_matrix", pr_matrix);
+		Shader.BIRD.setUniform1i("tex", 1);
+		
 		level = new Level();
 	}
 	
@@ -86,7 +89,7 @@ public class Main implements Runnable {
 			long now = System.nanoTime();
 			delta += (now - lastTime) / ns;
 			lastTime = now;
-			if (delta >= 1.0) { // Every time delta = 1.0, we've looped 60 times per second
+			if (delta >= 1.0) { // Every time delta = 1.0, it's 1/60th of a second
 				update();
 				updates++;
 				delta--;
@@ -96,7 +99,7 @@ public class Main implements Runnable {
 			frames++;
 			
 			if (System.currentTimeMillis() - timer > 1000) {
-				timer += 1000;
+				timer += 1000; // Will push forward to the next second
 				System.out.println(updates + " ups, " + frames + " fps");
 				updates = 0;
 				frames = 0;

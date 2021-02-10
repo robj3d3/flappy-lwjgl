@@ -14,6 +14,8 @@ public class Level {
 	private int xScroll = 0; // Horizontal scroll amount
 	private int map = 0;
 	
+	private Bird bird;
+	
 	public Level() {
 		float[] vertices = new float[] {
 				-10.0f, -10.0f * 9.0f / 16.0f, 0.0f,
@@ -36,11 +38,15 @@ public class Level {
 		
 		background = new VertexArray(vertices, indices, tcs);
 		bgTexture = new Texture("res/bg.jpeg");
+		
+		bird = new Bird();
 	}
 	
 	public void update() {
 		xScroll--; // -ve because moving map left
-		if (-xScroll % 300 == 0) map++;
+		if (-xScroll % 335 == 0) map++;
+		
+		bird.update();
 	}
 	
 	public void render() {
@@ -51,8 +57,9 @@ public class Level {
 			Shader.BG.setUniformMat4f("vw_matrix", Matrix4f.translate(new Vector3f(i * 10 + xScroll * 0.03f, 0.0f, 0.0f)));
 			background.draw(); // don't want to bind-draw-bind-draw-bind... so don't use render, just bind-draw-draw-dr...
 		}
-		background.render();
 		Shader.BG.disable();
 		bgTexture.unbind();
+		
+		bird.render();
 	}
 }
