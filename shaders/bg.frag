@@ -14,5 +14,5 @@ uniform sampler2D tex;
 void main()
 {
 	color = texture(tex, fs_in.tc);
-	color *= 3.0 / (length(bird - fs_in.position.xy) + 2.5) + 0.3;
+	color *= 2.0 / (length(bird - fs_in.position.xy) + 2.5) + 0.7;
 }
