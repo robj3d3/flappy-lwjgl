@@ -55,7 +55,7 @@ public class Bird {
 		rot = -delta * 90.0f;
 	}
 	
-	private void fall() {
+	public void fall() {
 		delta = -0.15f;
 	}
 	

@@ -20,10 +20,11 @@ public class Level {
 	
 	private Pipe[] pipes = new Pipe[5 * 2]; // 5 on the top, 5 on the bottom
 	private int index = 0;
+	private float OFFSET = 5.0f;
+	private boolean control = true;
 	
 	private Random random = new Random();
-	
-	private float OFFSET = 5.0f;
+
 	
 	public Level() {
 		float[] vertices = new float[] {
@@ -57,7 +58,7 @@ public class Level {
 		Pipe.create();
 		for (int i = 0; i < 5 * 2; i+= 2) {
 			pipes[i] = new Pipe(OFFSET + index * 3.0f, random.nextFloat() * 4.0f);
-			pipes[i+1] = new Pipe(pipes[i].getX(), pipes[i].getY() - 11.0f); // getX so aligned horizontally
+			pipes[i+1] = new Pipe(pipes[i].getX(), pipes[i].getY() - 11.5f); // getX so aligned horizontally
 			index += 2;
 		}
 	}
@@ -68,13 +69,17 @@ public class Level {
 	}
 	
 	public void update() {
-		xScroll--; // -ve because moving map left
-		if (-xScroll % 335 == 0) map++;
-		if (-xScroll > 250 && -xScroll % 120 == 0) updatePipes();
+		if (control) {
+			xScroll--; // -ve because moving map left
+			if (-xScroll % 335 == 0) map++;
+			if (-xScroll > 250 && -xScroll % 120 == 0) updatePipes();
+		}
+		
 		bird.update();
 		
-		if (collision()) {
-			System.out.println("Collision!");
+		if (control && collision()) {
+			bird.fall();
+			control = false; // Player's lost control of the bird
 		}
 	}
 	
