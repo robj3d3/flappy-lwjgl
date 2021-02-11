@@ -122,6 +122,9 @@ public class Main implements Runnable {
 	private void update() {
 		glfwPollEvents(); // key events
 		level.update();
+		if (level.isGameOver()) {
+			level = new Level();
+		}
 //		if (Input.keys[GLFW_KEY_SPACE]) {
 //			System.out.println("FLAP!");
 //		}

@@ -5,8 +5,11 @@ import java.util.Random;
 import com.robhallam.flappy.graphics.Shader;
 import com.robhallam.flappy.graphics.Texture;
 import com.robhallam.flappy.graphics.VertexArray;
+import com.robhallam.flappy.input.Input;
 import com.robhallam.flappy.math.Matrix4f;
 import com.robhallam.flappy.math.Vector3f;
+
+import static org.lwjgl.glfw.GLFW.*;
 
 public class Level {
 	
@@ -21,7 +24,7 @@ public class Level {
 	private Pipe[] pipes = new Pipe[5 * 2]; // 5 on the top, 5 on the bottom
 	private int index = 0;
 	private float OFFSET = 5.0f;
-	private boolean control = true;
+	private boolean control = true, reset = false;
 	
 	private Random random = new Random();
 
@@ -84,6 +87,10 @@ public class Level {
 			control = false; // Player's lost control of the bird
 		}
 		
+		if (!control && Input.isKeyDown(GLFW_KEY_SPACE)) {
+			reset = true;
+		}
+		
 		time += 0.01f;
 	}
 	
@@ -129,6 +136,10 @@ public class Level {
 		}
 		
 		return false;
+	}
+	
+	public boolean isGameOver() {
+		return reset;
 	}
 	
 	public void render() {
