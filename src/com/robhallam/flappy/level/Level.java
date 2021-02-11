@@ -10,7 +10,7 @@ import com.robhallam.flappy.math.Vector3f;
 
 public class Level {
 	
-	private VertexArray background;
+	private VertexArray background, fade;
 	private Texture bgTexture;
 	
 	private int xScroll = 0; // Horizontal scroll amount
@@ -25,6 +25,7 @@ public class Level {
 	
 	private Random random = new Random();
 
+	private float time = 0.0f;
 	
 	public Level() {
 		float[] vertices = new float[] {
@@ -45,10 +46,11 @@ public class Level {
 				1, 0,
 				1, 1
 		};
-		
+
+		fade = new VertexArray(6);
 		background = new VertexArray(vertices, indices, tcs);
 		bgTexture = new Texture("res/bg.jpeg");
-		
+
 		bird = new Bird();
 		
 		createPipes();
@@ -81,6 +83,8 @@ public class Level {
 			bird.fall();
 			control = false; // Player's lost control of the bird
 		}
+		
+		time += 0.01f;
 	}
 	
 	private void renderPipes() {
@@ -139,5 +143,10 @@ public class Level {
 		
 		renderPipes();
 		bird.render();
+		
+		Shader.FADE.enable();
+		Shader.FADE.setUniform1f("time", time);
+		fade.render();
+		Shader.FADE.disable();
 	}
 }

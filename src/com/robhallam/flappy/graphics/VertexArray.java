@@ -12,6 +12,11 @@ public class VertexArray {
 	private int vao, vbo, ibo, tbo;
 	private int count; // Number of vertices that we will render
 	
+	public VertexArray(int count) {
+		this.count = count;
+		vao = glGenVertexArrays();
+	}
+	
 	public VertexArray(float[] vertices, byte[] indices, float[] textureCoordinates) {
 		count = indices.length; // because we're using indices to describe vertices
 		
@@ -42,17 +47,23 @@ public class VertexArray {
 	
 	public void bind() {
 		glBindVertexArray(vao);
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
+		if (ibo > 0)
+			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
 		
 	}
 	
 	public void unbind() {
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+		if (ibo > 0)
+			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+		
 		glBindVertexArray(0);
 	}
 	
 	public void draw() {
-		glDrawElements(GL_TRIANGLES, count, GL_UNSIGNED_BYTE, 0);
+		if (ibo > 0)
+			glDrawElements(GL_TRIANGLES, count, GL_UNSIGNED_BYTE, 0);
+		else
+			glDrawArrays(GL_TRIANGLES, 0, count);
 	}
 	
 	public void render() {

@@ -60,6 +60,8 @@ public class Main implements Runnable {
 		glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 		glEnable(GL_DEPTH_TEST);
 		glActiveTexture(GL_TEXTURE1); // OpenGL supports multi-texturing so might not know which texture we're on about, 1 is same as Uniform1i number
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		System.out.println("OpenGL: " + glGetString(GL_VERSION));
 		Shader.loadAll();
 		
