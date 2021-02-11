@@ -45,6 +45,7 @@ public class Main implements Runnable {
 		window = glfwCreateWindow(width, height, "Flappy", NULL, NULL); // creates context in GLFW
 		
 		if (window == NULL) { 
+			System.err.println("Could not create GLFW window!");
 			return;
 		}
 		
