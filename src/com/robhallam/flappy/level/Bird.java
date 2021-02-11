@@ -67,4 +67,12 @@ public class Bird {
 		Shader.BIRD.disable();
 	}
 	
+	public float getY() {
+		return position.y;
+	}
+	
+	public float getSize() {
+		return SIZE;
+	}
+	
 }
