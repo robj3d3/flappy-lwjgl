@@ -57,7 +57,6 @@ public class Main implements Runnable {
 		
 		GL.createCapabilities(); // tell LWJGL that OpenGL context exists
 		
-		glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 		glEnable(GL_DEPTH_TEST);
 		glActiveTexture(GL_TEXTURE1); // OpenGL supports multi-texturing so might not know which texture we're on about, 1 is same as Uniform1i number
 		glEnable(GL_BLEND);

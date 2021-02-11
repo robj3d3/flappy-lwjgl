@@ -133,6 +133,7 @@ public class Level {
 	public void render() {
 		bgTexture.bind();
 		Shader.BG.enable();
+		Shader.BG.setUniform2f("bird", 0, bird.getY());
 		background.bind(); // Only want to bind once
 		for (int i = map; i < map + 4; i++) {
 			Shader.BG.setUniformMat4f("vw_matrix", Matrix4f.translate(new Vector3f(i * 10 + xScroll * 0.03f, 0.0f, 0.0f)));
